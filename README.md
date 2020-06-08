@@ -1,8 +1,3 @@
 # external-etcd-cluster
-external etcd cluster
-a/
-a/
-c/
-a\
-b\
-c\
+Đầu tiền cài đặt cụm etcd bằng etcdadm: \
+1
