@@ -18,3 +18,14 @@ scp /etc/etcd/pki/ca.crt "${CONTROL_PLANE}":/etc/kubernetes/pki/etcd/ \
 scp /etc/etcd/pki/apiserver-etcd-client.crt "${CONTROL_PLANE}":/etc/kubernetes/pki/ \
 scp /etc/etcd/pki/apiserver-etcd-client.key "${CONTROL_PLANE}":/etc/kubernetes/pki/ \
 Chú ý: Tất cả các master-host đều đã được cài đặt kubelet (Theo file InstallK8S.sh) \
+Bước 5: Thiết lập cụm K8s: \
+kubeadm init --config kubeadm-config.yaml --upload-certs --v=5 \
+Bước 5.5: Thiết lập mạng cho cụm K8s \
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml \
+Bước 6: Sang master-host thứ 2: \
+scp -R /etc/kubernetes/pki/ 192.168.141.234:/etc/kubernetes/ \
+Bước 7: Sử dụng câu lệnh join node : \
+kubeadm join 192.168.141.230:6443 --token a8lz23.ol1l00zijwje04wf     --discovery-token-ca-cert-hash sha256:82967c0311fc0bacc5399cd8ab3c6fd205589aa0be58d38736eadc53dcf31fc7 --control-plane \
+Bước 8: Join worker node: \
+kubeadm join 192.168.141.230:6443 --token la3x9j.go0z60ra3gkbtoqu     --discovery-token-ca-cert-hash sha256:82967c0311fc0bacc5399cd8ab3c6fd205589aa0be58d38736eadc53dcf31fc7 \
+echo 1 >> /proc/sys/net/bridge/bridge-nf-call-iptables (Có thể có hoặc không) \
