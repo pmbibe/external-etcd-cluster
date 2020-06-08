@@ -12,4 +12,5 @@ docker run --rm -it \
 --key /etc/etcd/pki/peer.key \
 --cacert /etc/etcd/pki/ca.crt \
 --endpoints https://${HOST0}:2379 endpoint health --cluster \
+a
 
