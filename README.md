@@ -12,5 +12,9 @@ docker run --rm -it \
 --key /etc/etcd/pki/peer.key \
 --cacert /etc/etcd/pki/ca.crt \
 --endpoints https://${HOST0}:2379 endpoint health --cluster \
-a
-
+Bước 4: Copy các file sau sang master-host \
+export CONTROL_PLANE="root@master-host" \
+scp /etc/etcd/pki/ca.crt "${CONTROL_PLANE}":/etc/kubernetes/pki/etcd/ \
+scp /etc/etcd/pki/apiserver-etcd-client.crt "${CONTROL_PLANE}":/etc/kubernetes/pki/ \
+scp /etc/etcd/pki/apiserver-etcd-client.key "${CONTROL_PLANE}":/etc/kubernetes/pki/ \
+Chú ý: Tất cả các master-host đều đã được cài đặt kubelet (Theo file InstallK8S.sh) \
